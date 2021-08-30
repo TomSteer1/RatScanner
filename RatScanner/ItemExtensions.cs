@@ -190,26 +190,20 @@ namespace RatScanner
 
 		public static int GetAvg24hMarketPrice(this Item item)
 		{
-			var total = item.GetMarketItem().Avg24hPrice;
+			var total = item.GetMarketItem().avg24hPrice;
 			if (item is CompoundItem itemC) total += itemC.Slots.Sum(slot => slot.ContainedItem?.GetAvg24hMarketPrice() ?? 0);
 			return total;
 		}
 
 		public static int GetMaxTraderPrice(this Item item)
 		{
-			var traderPrices = item.GetMarketItem().TraderPrices;
-			var total = traderPrices.Length > 0 ? traderPrices.Max(trader => trader.Price) : 0;
-			if (item is CompoundItem itemC) total += itemC.Slots.Sum(slot => slot.ContainedItem?.GetMaxTraderPrice() ?? 0);
-			return total;
+			var traderPrice = item.GetMarketItem().traderPrice;
+			return traderPrice;
 		}
 
 		private static int GetTraderPrice(this Item item, string traderId)
 		{
-			var traderPrices = item.GetMarketItem().TraderPrices;
-			var total = traderPrices?.FirstOrDefault(price => price.TraderId == traderId)?.Price ?? 0;
-
-			if (item is CompoundItem itemC) total += itemC.Slots.Sum(slot => slot.ContainedItem?.GetTraderPrice(traderId) ?? 0);
-
+			var traderPrices = item.GetMarketItem().traderPrice;
 			return total;
 		}
 

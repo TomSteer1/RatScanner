@@ -6,24 +6,24 @@ namespace RatScanner.FetchModels
 	public class MarketItem
 	{
 		// Item data
-		public string Id { get; set; }
-		public string WikiLink { get; set; } = "Unknown";
-		public int Timestamp { get; set; }
+		public string uid { get; set; }
+		public string wikiLink { get; set; } = "Unknown";
+		public string updated { get; set; }
 
 		// Price data
-		public int Price { get; set; }
-		public int BasePrice { get; set; }
+		public int price { get; set; }
+		public int basePrice { get; set; }
 
 		// https://youtrack.jetbrains.com/issue/RSRP-468572
 		// ReSharper disable InconsistentNaming
-		public int Avg24hPrice { get; set; }
+		public int avg24hPrice { get; set; }
 		// ReSharper restore InconsistentNaming
 
-		public TraderPrice[] TraderPrices { get; set; }
+		public int traderPrice { get; set; }
 
 		public MarketItem(string id)
 		{
-			Id = id;
+			uid = id;
 		}
 	}
 }

@@ -70,7 +70,7 @@ namespace RatScanner
 			try
 			{
 				var langString = LanguageMapping[language];
-				var json = Get($"{BaseUrl}/all?lang={langString}");
+				var json = Get($"https://tarkov-market.com/api/v1/items/all");
 				return JsonConvert.DeserializeObject<MarketItem[]>(json);
 			}
 			catch (Exception e)
@@ -224,6 +224,23 @@ namespace RatScanner
 			request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 			request.UserAgent = $"RatScanner-Client/{RatConfig.Version}";
 			if (bearerToken != null) request.Headers.Add("Authorization", "Bearer " + bearerToken);
+
+			using var response = (HttpWebResponse)request.GetResponse();
+			using var stream = response.GetResponseStream();
+
+			var noEncoding = string.IsNullOrEmpty(response.CharacterSet);
+			var encoding = noEncoding ? Encoding.UTF8 : Encoding.GetEncoding(response.CharacterSet);
+			var reader = new StreamReader(stream, encoding);
+			return reader.ReadToEnd();
+		}
+
+		private static string GetFromTarkovMarket(string url, string bearerToken = null)
+		{
+			var request = WebRequest.CreateHttp(url);
+			request.Method = WebRequestMethods.Http.Get;
+			request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+			request.UserAgent = $"RatScanner-Client/{RatConfig.Version}";
+			if (bearerToken != null) request.Headers.Add("x-api-key", bearerToken);
 
 			using var response = (HttpWebResponse)request.GetResponse();
 			using var stream = response.GetResponseStream();

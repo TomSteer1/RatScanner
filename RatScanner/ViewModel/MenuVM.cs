@@ -95,7 +95,7 @@ namespace RatScanner.ViewModel
 			get
 			{
 				var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-				var min = MatchedItems[0].GetMarketItem().Timestamp;
+				var min = 30000
 				return dt.AddSeconds(min).ToLocalTime().ToString(CultureInfo.CurrentCulture);
 			}
 		}
@@ -104,7 +104,7 @@ namespace RatScanner.ViewModel
 		{
 			get
 			{
-				var link = MatchedItems[0].GetMarketItem().WikiLink;
+				var link = MatchedItems[0].GetMarketItem().wikiLink;
 				if (link.Length > 3) return link;
 				return $"https://escapefromtarkov.gamepedia.com/{HttpUtility.UrlEncode(Name.Replace(" ", "_"))}";
 			}
