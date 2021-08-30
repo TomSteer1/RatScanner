@@ -201,21 +201,21 @@ namespace RatScanner
 			return traderPrice;
 		}
 
-		private static int GetTraderPrice(this Item item, string traderId)
+		public static string GetTraderCurrency(this Item item)
 		{
-			var traderPrices = item.GetMarketItem().traderPrice;
-			return total;
+			var currnecy = item.GetMarketItem().traderPriceCur;
+			return currnecy;
 		}
 
-		public static (string traderId, int price) GetBestTrader(this Item item)
+		private static int GetTraderPrice(this Item item, string traderId)
 		{
-			(string traderId, int price) result = ("", 0);
-			foreach (var traderId in TraderPrice.TraderIds)
-			{
-				var traderPrice = item.GetTraderPrice(traderId);
-				if (traderPrice > result.price) result = (traderId, traderPrice);
-			}
+			var traderPrice = item.GetMarketItem().traderPrice;
+			return traderPrice;
+		}
 
+		public static string GetBestTrader(this Item item)
+		{
+			var result = item.GetMarketItem().traderName;
 			return result;
 		}
 	}

@@ -17,7 +17,7 @@ namespace RatScanner
 		{
 			if (uid?.Length > 0)
 			{
-				var item = _items.FirstOrDefault(i => i.Id == uid);
+				var item = _items.FirstOrDefault(i => i.bsgId == uid);
 				if (item != null) return item.DeepClone();
 
 				Logger.LogWarning("Could not find item with uid: " + uid);

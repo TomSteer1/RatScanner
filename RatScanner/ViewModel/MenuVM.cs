@@ -60,20 +60,25 @@ namespace RatScanner.ViewModel
 
 		public string PricePerSlot => PriceToString(GetAvg24hPrice() / (MatchedItems[0].Width * MatchedItems[0].Height));
 
-		public string TraderName => TraderPrice.GetTraderName(GetBestTrader().traderId);
+		public string TraderName => GetBestTrader();
 
-		public string BestTraderPrice => IntToGroupedString(GetBestTrader().price) + " ₽";
+		public string BestTraderPrice => IntToGroupedString(GetMaxTraderPrice()) + GetTraderCurrency();
 
-		private (string traderId, int price) GetBestTrader()
+		private string GetBestTrader()
 		{
 			return MatchedItems[0].GetBestTrader();
 		}
 
-		public string MaxTraderPrice => IntToGroupedString(GetMaxTraderPrice()) + " ₽";
+		public string MaxTraderPrice => IntToGroupedString(GetMaxTraderPrice()) + GetTraderCurrency();
 
 		private int GetMaxTraderPrice()
 		{
 			return MatchedItems[0].GetMaxTraderPrice();
+		}
+
+		private string GetTraderCurrency()
+		{
+			return MatchedItems[0].GetTraderCurrency();
 		}
 
 		public NeededItem TrackingNeeds => MatchedItems[0].GetTrackingNeeds();
@@ -94,9 +99,7 @@ namespace RatScanner.ViewModel
 		{
 			get
 			{
-				var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-				var min = 30000
-				return dt.AddSeconds(min).ToLocalTime().ToString(CultureInfo.CurrentCulture);
+				return MatchedItems[0].GetMarketItem().updated;
 			}
 		}
 

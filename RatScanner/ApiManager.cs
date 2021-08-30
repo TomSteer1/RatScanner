@@ -70,7 +70,7 @@ namespace RatScanner
 			try
 			{
 				var langString = LanguageMapping[language];
-				var json = Get($"https://tarkov-market.com/api/v1/items/all");
+				var json = GetFromTarkovMarket($"https://tarkov-market.com/api/v1/items/all");
 				return JsonConvert.DeserializeObject<MarketItem[]>(json);
 			}
 			catch (Exception e)
@@ -240,7 +240,7 @@ namespace RatScanner
 			request.Method = WebRequestMethods.Http.Get;
 			request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 			request.UserAgent = $"RatScanner-Client/{RatConfig.Version}";
-			if (bearerToken != null) request.Headers.Add("x-api-key", bearerToken);
+			request.Headers.Add("x-api-key", "");
 
 			using var response = (HttpWebResponse)request.GetResponse();
 			using var stream = response.GetResponseStream();

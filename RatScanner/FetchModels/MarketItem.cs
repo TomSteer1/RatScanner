@@ -6,13 +6,15 @@ namespace RatScanner.FetchModels
 	public class MarketItem
 	{
 		// Item data
-		public string uid { get; set; }
+		public string bsgId { get; set; }
 		public string wikiLink { get; set; } = "Unknown";
 		public string updated { get; set; }
 
 		// Price data
 		public int price { get; set; }
 		public int basePrice { get; set; }
+		public string traderName { get; set; }
+		public string traderPriceCur { get; set; }
 
 		// https://youtrack.jetbrains.com/issue/RSRP-468572
 		// ReSharper disable InconsistentNaming
@@ -23,7 +25,7 @@ namespace RatScanner.FetchModels
 
 		public MarketItem(string id)
 		{
-			uid = id;
+			bsgId = id;
 		}
 	}
 }
